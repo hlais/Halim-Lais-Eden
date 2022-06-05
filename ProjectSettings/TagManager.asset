@@ -10,6 +10,7 @@ TagManager:
   - Left
   - Wall
   - Chair
+  - Space
   layers:
   - Default
   - TransparentFX

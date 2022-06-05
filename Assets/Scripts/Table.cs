@@ -8,7 +8,7 @@ public class Table : MonoBehaviour
     float maxLength;
     public float MIN_LENGTH = 1.5f; //Rules state must be reactanglular table
     Renderer floor;
-    float WALL_DEPTH = 1; // check the depth of the prefab wall 
+    float WALL_DEPTH = 0.5f; // check the depth of the prefab wall 
 
     public float MaxLength
     {

@@ -26,12 +26,19 @@ public class PlacedInCentre : MonoBehaviour
 
     void Start()
     {
-        this.gameObject.transform.position = new Vector3(centre.x,yOffset,centre.z);
+        PlaceInCentre();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    PlaceInCentre();
+        //}
+    }
+    public void PlaceInCentre()
+    {
+        this.gameObject.transform.position = new Vector3(centre.x, yOffset, centre.z);
     }
 }

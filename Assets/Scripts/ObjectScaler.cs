@@ -10,6 +10,7 @@ public class ObjectScaler : MonoBehaviour
     
     public Slider slider;
     Table currentTable;
+    SpawnChairsBasedOnBounds currentTableBounds;
     float currentTableMaxLength;
     float currentTableMinLenght;
 
@@ -17,6 +18,7 @@ public class ObjectScaler : MonoBehaviour
     private void Awake()
     {
         currentTable = FindObjectOfType<Table>();
+        currentTableBounds = FindObjectOfType<SpawnChairsBasedOnBounds>();
         SetUpSliderRange();
     }
 
@@ -45,6 +47,7 @@ public class ObjectScaler : MonoBehaviour
     public void ValueChangeCheck()
     {
         ScaleTable(slider.value);
+        currentTableBounds.SpawnChairs();
     }
 
     public void ScaleTable(float scale)
