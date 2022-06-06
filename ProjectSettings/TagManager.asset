@@ -11,6 +11,7 @@ TagManager:
   - Wall
   - Chair
   - Space
+  - Slider
   layers:
   - Default
   - TransparentFX

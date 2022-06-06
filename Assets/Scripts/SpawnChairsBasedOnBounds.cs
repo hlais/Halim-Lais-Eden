@@ -9,15 +9,19 @@ public class SpawnChairsBasedOnBounds : MonoBehaviour
     
     bool hasSpawned = false;
     float halfChairLength;
+    float chairYCentre;
+    float fullChairLength;
     public GameObject chair;
-    float spaceBetweenChairs = 0.25f;
+    float spaceBetweenChairs = 0.20f;
     private void Awake()
     {
-        halfChairLength = chair.transform.localScale.x / 2;
+        halfChairLength = chair.transform.localScale.x * 0.5f; //cache this, for better performance
+        fullChairLength = chair.transform.localScale.x;
+        chairYCentre = chair.transform.localScale.y * 0.5f;
     }
     void Start()
     {
-
+        SimplePool.Preload(chair, 100);
         
     }
 
@@ -35,27 +39,29 @@ public class SpawnChairsBasedOnBounds : MonoBehaviour
         //    SpawnChairs();
         //}
     }
-
+    //Dynamic bounds 
     public float GetLeftBounds()
     {
         float leftBounds=  transform.localScale.x * 0.5f;
-        return -leftBounds +halfChairLength ;
+        return -leftBounds +halfChairLength - spaceBetweenChairs ;
+        
     }
-
+    
     public float GetRightBounds()
     {
         float rightBounds = transform.localScale.x * 0.5f;
-        return rightBounds -halfChairLength - spaceBetweenChairs;
+        return rightBounds - halfChairLength - spaceBetweenChairs; 
     }
 
     public void SpawnChairs()
     {
+        //if ()
         RemoveChairs();
-        for (float i = GetLeftBounds(); i <GetRightBounds(); i+=spaceBetweenChairs+ chair.transform.localScale.x)
+        for (float i = GetLeftBounds(); i <GetRightBounds(); i+=spaceBetweenChairs+ fullChairLength )
         {
-           
-            Instantiate(chair, new Vector3(i + spaceBetweenChairs , transform.position.y, transform.position.z -1f),Quaternion.identity);
-            Instantiate(chair, new Vector3(i + spaceBetweenChairs, transform.position.y, transform.position.z + 1f), Quaternion.identity);
+            
+            SimplePool.Spawn(chair, new Vector3(i + spaceBetweenChairs , chairYCentre, transform.position.z -1f),Quaternion.identity);
+            SimplePool.Spawn(chair, new Vector3(i + spaceBetweenChairs, chairYCentre, transform.position.z + 1f), Quaternion.identity);
         }
     }
 
@@ -64,7 +70,7 @@ public class SpawnChairsBasedOnBounds : MonoBehaviour
         Chair[] chairs = GameObject.FindObjectsOfType<Chair>();
         for (int i = 0; i < chairs.Length; i++)
         {
-            Destroy(chairs[i].gameObject);
+            SimplePool.Despawn(chairs[i].gameObject);
         }
     }
 }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ObjectScaler : MonoBehaviour
+public class TableScaler : MonoBehaviour
 {
 
     
     
-    public Slider slider;
+    Slider slider;
     Table currentTable;
     SpawnChairsBasedOnBounds currentTableBounds;
     float currentTableMaxLength;
@@ -19,6 +19,7 @@ public class ObjectScaler : MonoBehaviour
     {
         currentTable = FindObjectOfType<Table>();
         currentTableBounds = FindObjectOfType<SpawnChairsBasedOnBounds>();
+        slider = GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
         SetUpSliderRange();
     }
 
@@ -46,20 +47,18 @@ public class ObjectScaler : MonoBehaviour
     // Invoked when the value of the slider changes.
     public void ValueChangeCheck()
     {
-        ScaleTable(slider.value);
+        currentTable.ScaleTable(slider.value);
         currentTableBounds.SpawnChairs();
     }
 
-    public void ScaleTable(float scale)
-    {
-        currentTable.gameObject.transform.localScale = new Vector3(scale, transform.localScale.y, transform.localScale.z);
-    }
 
-    //set up bounds of Table
-    void SetUpSliderRange()
+
+    
+    void SetUpSliderRange()//sets up bounds of Table to slider
     {
         slider.minValue = currentTable.MIN_LENGTH;
         slider.maxValue = currentTable.MaxLength;
+
     }
 
 
