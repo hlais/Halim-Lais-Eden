@@ -4,19 +4,14 @@ using UnityEngine;
 using TMPro;
 
 
-public class HexToRGB : MonoBehaviour
+public class HexToColour : MonoBehaviour
 {
     public TMP_InputField textInput;
     Color defaultColor;
     Color currentColor;
 
-    //bool isValidHex;
-
-    //public bool IsValidHex { get { return isValidHex; }}
-
-
-
-    void Start()
+    public Color CurrentColoor { get { return currentColor; } } 
+    void Awake()
     {
         textInput.onValueChanged.AddListener(delegate { StringChangeCheck(); });
         defaultColor = GameObject.FindGameObjectWithTag("Table").GetComponent<MeshRenderer>().material.color;
@@ -75,7 +70,7 @@ public class HexToRGB : MonoBehaviour
     }
     
 
-    void UpdateColours(Color convertedFromHex)
+    public void UpdateColours(Color convertedFromHex)
     {
         GameObject[] chairs = GameObject.FindGameObjectsWithTag("Chair");
         GameObject table = GameObject.FindGameObjectWithTag("Table");

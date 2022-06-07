@@ -3,17 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TableScaler : MonoBehaviour
+public class UIController : MonoBehaviour
 {
-
-    
-    
     Slider slider;
     Table currentTable;
     SpawnChairsBasedOnBounds currentTableBounds;
-    float currentTableMaxLength;
-    float currentTableMinLenght;
-
 
     private void Awake()
     {
@@ -29,9 +23,7 @@ public class TableScaler : MonoBehaviour
         currentTable = newTable;
         SetUpSliderRange();
         //update size to avoid new talbe clipping through Dynamical Room size
-        currentTable.gameObject.transform.localScale = new Vector3(slider.minValue, transform.localScale.y, transform.localScale.z);
-       
-        
+        currentTable.gameObject.transform.localScale = new Vector3(slider.minValue, transform.localScale.y, transform.localScale.z);    
     }
 
 
@@ -50,8 +42,6 @@ public class TableScaler : MonoBehaviour
         currentTable.ScaleTable(slider.value);
         currentTableBounds.SpawnChairs();
     }
-
-
 
     
     void SetUpSliderRange()//sets up bounds of Table to slider
