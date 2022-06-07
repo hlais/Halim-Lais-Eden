@@ -8,19 +8,26 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     Slider tableLengthSlider;
-    TMP_InputField spaceText;
-
+    TMP_InputField spaceInput;
+    TMP_InputField hexInput;
+    
     Table currentTable;
     SpawnChairsBasedOnBounds currentTableBounds;
+    HexToColour hexToColour;
 
     private void Awake()
     {
+        //cache objects
         currentTable = FindObjectOfType<Table>();
         currentTableBounds = FindObjectOfType<SpawnChairsBasedOnBounds>();
+        hexToColour = FindObjectOfType<HexToColour>();
+
+        /// UI set ups
         tableLengthSlider = GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
-        spaceText = GameObject.FindGameObjectWithTag("SpaceBetweenChairs").GetComponent<TMP_InputField>();
+        spaceInput = GameObject.FindGameObjectWithTag("SpaceBetweenChairs").GetComponent<TMP_InputField>();
+        hexInput = GameObject.FindGameObjectWithTag("Hex").GetComponent<TMP_InputField>();
+
         SetUpSliderRange();
-        
     }
 
     //TO DO - itterate through different tables 
@@ -37,7 +44,8 @@ public class UIController : MonoBehaviour
     {
 
         tableLengthSlider.onValueChanged.AddListener(delegate { TableLength(); });
-        spaceText.onValueChanged.AddListener(delegate {SpaceBetweenChairs(); });
+        spaceInput.onValueChanged.AddListener(delegate { SpaceBetweenChairs(); });
+        hexInput.onValueChanged.AddListener(delegate { StringChangeCheck(); });
 
     }
 
@@ -53,17 +61,15 @@ public class UIController : MonoBehaviour
      void SpaceBetweenChairs()
     {
         float result;
-        if (float.TryParse(spaceText.text, out result))
+        if (float.TryParse(spaceInput.text, out result))
         {
             SetSpaceBetweenChairs(result);
         }
         {
+            // TODO UI text to display prompt to user
             Debug.Log("Only numbers please");
-        }
-
-        
+        }     
     }
-
 
 
     void SetUpSliderRange()//sets up bounds of Table to slider
@@ -73,8 +79,6 @@ public class UIController : MonoBehaviour
 
     }
 
-    
-
      void SetSpaceBetweenChairs(float space)
     {
         if (space < 0.001) { Debug.Log("Chairs are too close"); return; } //avoid clipping
@@ -82,6 +86,31 @@ public class UIController : MonoBehaviour
         //update space 
         currentTableBounds.SpawnChairs();
 
+    }
+
+    void StringChangeCheck()
+    {
+
+        if (hexInput.text.Length < 1)
+        {
+
+            hexToColour.RestoreDefaulColour();
+
+        }
+
+        else if (hexInput.text.Length < 6)
+        {
+            //TODO UI text to display prompt to user
+            Debug.Log("Waiting for you Hexy!");
+        }
+        else
+        {
+            // TODO UI text to display prompt to user
+            Debug.Log("looks like a hexy");
+            hexToColour.HexStringToRGB(hexInput.text);
+
+
+        }
     }
 
 

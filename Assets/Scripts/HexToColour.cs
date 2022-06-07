@@ -6,44 +6,20 @@ using TMPro;
 
 public class HexToColour : MonoBehaviour
 {
-    TMP_InputField textInput;
+    
     Color defaultColor;
     Color currentColor;
 
     public Color CurrentColoor { get { return currentColor; } } 
     void Awake()
     {
-        textInput = GameObject.FindGameObjectWithTag("Hex").GetComponent<TMP_InputField>();
-        textInput.onValueChanged.AddListener(delegate { StringChangeCheck(); });
+        
         defaultColor = GameObject.FindGameObjectWithTag("Table").GetComponent<MeshRenderer>().material.color;
         currentColor = defaultColor;
     }
     public string HexColour { get  { return HexToString(currentColor);}}
 
-    void StringChangeCheck()
-    { 
-  
-        if (textInput.text.Length < 1)
-        {
-            
-            RestoreDefaulColour();
-          
-        }
 
-        else if (textInput.text.Length < 6)
-        {
-            //TODO UI text to display prompt to user
-            Debug.Log("Waiting for you Hexy!");
-        }
-        else
-        {
-            // TODO UI text to display prompt to user
-            Debug.Log("looks like a hexy");
-            HexStringToRGB(textInput.text);
-            
-
-        }
-    }
     string HexToString(Color color)
     {
         Color32 c = color;

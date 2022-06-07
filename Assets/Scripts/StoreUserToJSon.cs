@@ -5,12 +5,11 @@ using System;
 
 public class StoreUserToJSon : MonoBehaviour
 {
-    UserDetails currentUser = new UserDetails();
+    UserDetails currentUser = new UserDetails(); 
     HexToColour hexDetails;
     void Start()
     {
-        hexDetails = FindObjectOfType<HexToColour>();
-        
+        hexDetails = FindObjectOfType<HexToColour>(); 
     }
 
     public void UpdateUserDetails()
