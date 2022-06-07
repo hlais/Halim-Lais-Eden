@@ -4,48 +4,17 @@ using UnityEngine;
 
 public class Chair : MonoBehaviour
 {
-    public GameObject rightChairToSpawn;
-    public GameObject leftChairToSpawn;
-    [SerializeField] float xDistance = 5f;
-    public Transform rightPos;
-    public Transform leftPos;
-    Vector3 rightOffset;
-    Vector3 leftOffset;
-    static int spawnedChair = 2;
+    //apply hex colours to newly spawned objects since Cant edit prefabs on run time || or add a new button to update colors <- better performance? 
+    Table tableColour;
+    Color currentColour;
+   
 
 
-
-    void Start()
+    private void Start()
     {
-     
-
+        tableColour = GameObject.FindObjectOfType<Table>();
+        Color currentColour = tableColour.GetComponent<MeshRenderer>().material.color;
+        GetComponent<MeshRenderer>().material.color = currentColour;
     }
 
-        // Update is called once per frame
-        void Update()
-    {
-      
-    }
-
-    public void SpawnAChair(string direction)
-    {
-        
-            if (direction == "Left")
-            {
-                Instantiate(leftChairToSpawn, leftPos.position, transform.localRotation);
-              
-
-            }
-            if (direction == "Right")
-            {
-                Instantiate(rightChairToSpawn, rightPos.position, transform.localRotation);
-          
-                spawnedChair++;
-               
-            
-        }
-     
-    }
-
- 
 }

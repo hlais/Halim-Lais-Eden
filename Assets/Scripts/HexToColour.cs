@@ -4,50 +4,22 @@ using UnityEngine;
 using TMPro;
 
 
-public class HexToRGB : MonoBehaviour
+public class HexToColour : MonoBehaviour
 {
-    public TMP_InputField textInput;
+    
     Color defaultColor;
     Color currentColor;
 
-    //bool isValidHex;
-
-    //public bool IsValidHex { get { return isValidHex; }}
-
-
-
-    void Start()
+    public Color CurrentColoor { get { return currentColor; } } 
+    void Awake()
     {
-        textInput.onValueChanged.AddListener(delegate { StringChangeCheck(); });
+        
         defaultColor = GameObject.FindGameObjectWithTag("Table").GetComponent<MeshRenderer>().material.color;
         currentColor = defaultColor;
     }
     public string HexColour { get  { return HexToString(currentColor);}}
 
-    void StringChangeCheck()
-    { 
-  
-        if (textInput.text.Length < 1)
-        {
-            
-            RestoreDefaulColour();
-          
-        }
 
-        else if (textInput.text.Length < 6)
-        {
-            //TODO UI text to display prompt to user
-            //isValidHex = false;
-            Debug.Log("Waiting for you Hexy!");
-        }
-        else
-        {
-            Debug.Log("looks like a hexy");
-            HexStringToRGB(textInput.text);
-            
-
-        }
-    }
     string HexToString(Color color)
     {
         Color32 c = color;
@@ -55,7 +27,7 @@ public class HexToRGB : MonoBehaviour
         return hex;
     }
 
-    void HexStringToRGB(string HeX)
+    public void HexStringToRGB(string HeX)
     {
 
         if (ColorUtility.TryParseHtmlString(HeX, out Color color))
@@ -68,14 +40,14 @@ public class HexToRGB : MonoBehaviour
         }
         else
         {
-            //isValidHex = false;
+            // TODO UI text to display prompt to user
             Debug.Log("The value aint Hexy man!");
-            //TODO UI text to display prompt to user
+         
         }
     }
     
 
-    void UpdateColours(Color convertedFromHex)
+     void UpdateColours(Color convertedFromHex)
     {
         GameObject[] chairs = GameObject.FindGameObjectsWithTag("Chair");
         GameObject table = GameObject.FindGameObjectWithTag("Table");
@@ -86,7 +58,7 @@ public class HexToRGB : MonoBehaviour
         }
     }
 
-    void RestoreDefaulColour()
+    public void RestoreDefaulColour()
     {
         GameObject[] chairs = GameObject.FindGameObjectsWithTag("Chair");
         GameObject table = GameObject.FindGameObjectWithTag("Table");
