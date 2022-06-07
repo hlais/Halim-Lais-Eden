@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
-    Slider slider;
+    Slider tableLengthSlider;
+    TMP_InputField spaceText;
+
     Table currentTable;
     SpawnChairsBasedOnBounds currentTableBounds;
 
@@ -13,8 +17,10 @@ public class UIController : MonoBehaviour
     {
         currentTable = FindObjectOfType<Table>();
         currentTableBounds = FindObjectOfType<SpawnChairsBasedOnBounds>();
-        slider = GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
+        tableLengthSlider = GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
+        spaceText = GameObject.FindGameObjectWithTag("SpaceBetweenChairs").GetComponent<TMP_InputField>();
         SetUpSliderRange();
+        
     }
 
     //TO DO - itterate through different tables 
@@ -23,31 +29,58 @@ public class UIController : MonoBehaviour
         currentTable = newTable;
         SetUpSliderRange();
         //update size to avoid new talbe clipping through Dynamical Room size
-        currentTable.gameObject.transform.localScale = new Vector3(slider.minValue, transform.localScale.y, transform.localScale.z);    
+        currentTable.gameObject.transform.localScale = new Vector3(tableLengthSlider.minValue, transform.localScale.y, transform.localScale.z);    
     }
 
 
     void Start()
     {
-        
-        slider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+
+        tableLengthSlider.onValueChanged.AddListener(delegate { TableLength(); });
+        spaceText.onValueChanged.AddListener(delegate {SpaceBetweenChairs(); });
 
     }
 
 
 
     // Invoked when the value of the slider changes.
-    public void ValueChangeCheck()
+    public void TableLength()
     {
-        currentTable.ScaleTable(slider.value);
+        currentTable.ScaleTable(tableLengthSlider.value);
         currentTableBounds.SpawnChairs();
     }
 
-    
+     void SpaceBetweenChairs()
+    {
+        float result;
+        if (float.TryParse(spaceText.text, out result))
+        {
+            SetSpaceBetweenChairs(result);
+        }
+        {
+            Debug.Log("Only numbers please");
+        }
+
+        
+    }
+
+
+
     void SetUpSliderRange()//sets up bounds of Table to slider
     {
-        slider.minValue = currentTable.MIN_LENGTH;
-        slider.maxValue = currentTable.MaxLength;
+        tableLengthSlider.minValue = currentTable.MinLength;
+        tableLengthSlider.maxValue = currentTable.MaxLength;
+
+    }
+
+    
+
+     void SetSpaceBetweenChairs(float space)
+    {
+        if (space < 0.001) { Debug.Log("Chairs are too close"); return; } //avoid clipping
+        currentTableBounds.SpaceBetweenChairs = space;
+        //update space 
+        currentTableBounds.SpawnChairs();
 
     }
 

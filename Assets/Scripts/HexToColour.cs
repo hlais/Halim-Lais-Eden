@@ -6,13 +6,14 @@ using TMPro;
 
 public class HexToColour : MonoBehaviour
 {
-    public TMP_InputField textInput;
+    TMP_InputField textInput;
     Color defaultColor;
     Color currentColor;
 
     public Color CurrentColoor { get { return currentColor; } } 
     void Awake()
     {
+        textInput = GameObject.FindGameObjectWithTag("Hex").GetComponent<TMP_InputField>();
         textInput.onValueChanged.AddListener(delegate { StringChangeCheck(); });
         defaultColor = GameObject.FindGameObjectWithTag("Table").GetComponent<MeshRenderer>().material.color;
         currentColor = defaultColor;
@@ -32,11 +33,11 @@ public class HexToColour : MonoBehaviour
         else if (textInput.text.Length < 6)
         {
             //TODO UI text to display prompt to user
-            //isValidHex = false;
             Debug.Log("Waiting for you Hexy!");
         }
         else
         {
+            // TODO UI text to display prompt to user
             Debug.Log("looks like a hexy");
             HexStringToRGB(textInput.text);
             
@@ -50,7 +51,7 @@ public class HexToColour : MonoBehaviour
         return hex;
     }
 
-    void HexStringToRGB(string HeX)
+    public void HexStringToRGB(string HeX)
     {
 
         if (ColorUtility.TryParseHtmlString(HeX, out Color color))
@@ -63,14 +64,14 @@ public class HexToColour : MonoBehaviour
         }
         else
         {
-            //isValidHex = false;
+            // TODO UI text to display prompt to user
             Debug.Log("The value aint Hexy man!");
-            //TODO UI text to display prompt to user
+         
         }
     }
     
 
-    public void UpdateColours(Color convertedFromHex)
+     void UpdateColours(Color convertedFromHex)
     {
         GameObject[] chairs = GameObject.FindGameObjectsWithTag("Chair");
         GameObject table = GameObject.FindGameObjectWithTag("Table");
@@ -81,7 +82,7 @@ public class HexToColour : MonoBehaviour
         }
     }
 
-    void RestoreDefaulColour()
+    public void RestoreDefaulColour()
     {
         GameObject[] chairs = GameObject.FindGameObjectsWithTag("Chair");
         GameObject table = GameObject.FindGameObjectWithTag("Table");

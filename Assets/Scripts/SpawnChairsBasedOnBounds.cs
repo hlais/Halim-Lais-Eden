@@ -5,14 +5,16 @@ using UnityEngine.UI;
 
 public class SpawnChairsBasedOnBounds : MonoBehaviour
 {
-
     
-    bool hasSpawned = false;
     float halfChairLength;
     float chairYCentre;
     float fullChairLength;
     public GameObject chair;
     float spaceBetweenChairs = 0.20f;
+    float spaceFromTable = 1f;
+
+    public float SpaceBetweenChairs { get { return spaceBetweenChairs; } set { spaceBetweenChairs = value; } }
+    public float SpaceFromTable { get { return spaceFromTable; } set { spaceFromTable = value; } } // TODO make this adjustable UI Element
     private void Awake()
     {
         halfChairLength = chair.transform.localScale.x * 0.5f; //cache this, for better performance
@@ -24,21 +26,7 @@ public class SpawnChairsBasedOnBounds : MonoBehaviour
         SimplePool.Preload(chair, 100);
         
     }
-
-    public float SetSpaceBetweenChairs { get; set; }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //Debug.Log(GetLeftBounds());
-        //if(!hasSpawned)
-        //if (Input.GetKey(KeyCode.A))
-
-        //{
-        //     hasSpawned = true;
-        //    SpawnChairs();
-        //}
-    }
+    
     //Dynamic bounds 
     public float GetLeftBounds()
     {
@@ -54,18 +42,17 @@ public class SpawnChairsBasedOnBounds : MonoBehaviour
     }
 
     public void SpawnChairs()
-    {
-        //if ()
-        RemoveChairs();
+    {       
+        RemovePreviousChairs();
+        //spawn new chairs
         for (float i = GetLeftBounds(); i <GetRightBounds(); i+=spaceBetweenChairs+ fullChairLength )
-        {
-            
+        {           
             SimplePool.Spawn(chair, new Vector3(i + spaceBetweenChairs , chairYCentre, transform.position.z -1f),Quaternion.identity);
             SimplePool.Spawn(chair, new Vector3(i + spaceBetweenChairs, chairYCentre, transform.position.z + 1f), Quaternion.identity);
-        }
+        }    
     }
 
-    public void RemoveChairs()
+    public void RemovePreviousChairs()
     {
         Chair[] chairs = GameObject.FindObjectsOfType<Chair>();
         for (int i = 0; i < chairs.Length; i++)

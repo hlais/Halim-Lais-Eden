@@ -6,17 +6,14 @@ public class Table : MonoBehaviour
 {
 
     float maxLength;
-    public float MIN_LENGTH = 1f; //Rules state must be reactanglular table - any less this wont really be a rectangle
+    const float MIN_LENGTH = 1f; //Rules state must be reactanglular table - any less this wont really be a rectangle
     Renderer floor;
     float wall_depth; // check the depth of wall
-    int SIDE_WALLS = 2;
-    float CLIPPING = 0.01f;/// safe gaurd - to avoid z fighting - maybe Not needed?
+    const int SIDE_WALLS = 2;
+    const float CLIPPING = 0.01f;/// safe gaurd - to avoid z fighting - maybe Not needed?
 
-    public float MaxLength
-    {
-        get { return maxLength; }
-
-    }
+    public float MaxLength{   get { return maxLength; } }
+    public float MinLength { get { return MIN_LENGTH; } }
 
     void Awake()
     {
@@ -29,13 +26,12 @@ public class Table : MonoBehaviour
     public void CalculateMaxTableBounds()
     {
         floor = GameObject.FindGameObjectWithTag("Floor").GetComponent<Renderer>();
-        
-        maxLength = floor.bounds.size.x - ((wall_depth + CLIPPING) * SIDE_WALLS);
+        maxLength = floor.bounds.size.x - ((wall_depth/2 + CLIPPING) * SIDE_WALLS);
         Debug.Log("Max lenght " + maxLength);
     }
     public void ScaleTable(float scale)
     {
-        if (scale == maxLength) { return; }
+       //limit already set from UI slider
         transform.localScale = new Vector3(scale, transform.localScale.y, transform.localScale.z);
     }
 }

@@ -6,12 +6,11 @@ TagManager:
   tags:
   - Floor
   - Table
-  - Right
-  - Left
   - Wall
   - Chair
-  - Space
   - Slider
+  - Hex
+  - SpaceBetweenChairs
   layers:
   - Default
   - TransparentFX
