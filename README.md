@@ -1,5 +1,8 @@
 # Halim-Lais-Eden
-Chairs Increases Dynamically based of Table length
+Chairs are added dynamically based of table length
+HEX value applied to furniture
+Enter value to adjust space between chairs
+Create and print Json details to console
 
 Unity Editor 2019.4.25f1
 Following was applied:
