@@ -47,8 +47,8 @@ public class SpawnChairsBasedOnBounds : MonoBehaviour
         //spawn new chairs
         for (float i = GetLeftBounds(); i <GetRightBounds(); i+=spaceBetweenChairs+ fullChairLength )
         {           
-            SimplePool.Spawn(chair, new Vector3(i + spaceBetweenChairs , chairYCentre, transform.position.z -1f),Quaternion.identity);
-            SimplePool.Spawn(chair, new Vector3(i + spaceBetweenChairs, chairYCentre, transform.position.z + 1f), Quaternion.identity);
+            SimplePool.Spawn(chair, new Vector3(i + spaceBetweenChairs , chairYCentre, transform.position.z -spaceFromTable),Quaternion.identity);
+            SimplePool.Spawn(chair, new Vector3(i + spaceBetweenChairs, chairYCentre, transform.position.z + spaceFromTable), Quaternion.identity);
         }    
     }
 
