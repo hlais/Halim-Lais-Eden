@@ -1,5 +1,5 @@
 # Halim-Lais-Eden
-Chairs are added dynamically based of table length
+<b>Chairs are added dynamically based of table length </b>
 HEX value applied to furniture
 Enter value to adjust space between chairs
 Create and print Json details to console
