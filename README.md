@@ -1,5 +1,5 @@
 # Halim-Lais-Eden
-Table Increase Dynameic chair instantiate
+Chairs Increases Dynamically based of Table length
 
 Unity Editor 2019.4.25f1
 Following was applied:
