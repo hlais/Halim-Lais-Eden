@@ -39,7 +39,6 @@ public class UIController : MonoBehaviour
         currentTable.gameObject.transform.localScale = new Vector3(tableLengthSlider.minValue, transform.localScale.y, transform.localScale.z);    
     }
 
-
     void Start()
     {
 
@@ -48,8 +47,6 @@ public class UIController : MonoBehaviour
         hexInput.onValueChanged.AddListener(delegate { StringChangeCheck(); });
 
     }
-
-
 
     // Invoked when the value of the slider changes.
     public void TableLength()
@@ -90,29 +87,22 @@ public class UIController : MonoBehaviour
 
     void StringChangeCheck()
     {
-
         if (hexInput.text.Length < 1)
         {
-
             hexToColour.RestoreDefaulColour();
-
         }
 
         else if (hexInput.text.Length < 6)
         {
             //TODO UI text to display prompt to user
-            Debug.Log("Waiting for you Hexy!");
+            Debug.Log("Waiting for a HEX value");
         }
         else
         {
             // TODO UI text to display prompt to user
-            Debug.Log("looks like a hexy");
+            Debug.Log("Valid HEX value entered");
             hexToColour.HexStringToRGB(hexInput.text);
-
-
         }
     }
-
-
 }
 

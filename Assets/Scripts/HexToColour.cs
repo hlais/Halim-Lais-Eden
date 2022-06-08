@@ -10,7 +10,7 @@ public class HexToColour : MonoBehaviour
     Color defaultColor;
     Color currentColor;
 
-    public Color CurrentColoor { get { return currentColor; } } 
+    public Color CurrentColor { get { return currentColor; } } 
     void Awake()
     {
         
